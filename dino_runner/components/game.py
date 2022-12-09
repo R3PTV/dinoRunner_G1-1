@@ -1,12 +1,15 @@
 import pygame
+#from playsound import playsound
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from dino_runner.components.dinosaur.dinosaur import Dinosaur
 from dino_runner.components.obstacle.obstacleManager import ObstacleManager
 from dino_runner.components.score_menu.text_utils import *
 from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 from dino_runner.components.powerup.powerupManager import PowerUpManager
-#from dino_runner.components.cloud.cloud import Cloud
-#from dino_runner.components.bird.bird import Bird
+from dino_runner.components.cloud.cloud import Cloud
+from dino_runner.components.bird.bird import Bird
+#from dino_runner.components.music.background_music import *
+
 
 
 class Game:
@@ -17,20 +20,22 @@ class Game:
         self.screen = pygame.display.set_mode( (SCREEN_WIDTH, SCREEN_HEIGHT) )
         self.clock = pygame.time.Clock()
         self.playing = False
-        self.game_speed = 30
+        self.game_speed = 15
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
-        #self.cloud_manager = Cloud()
+        self.cloud_manager = Cloud()
         self.points = 0
         self.death_count = 0
         self.running = True
         self.player_heart_manager = PlayerHeartManager()
         self.show_text = False
-        #self.bird_manager = Bird()
-    
+        self.bird_manager = Bird()
+        #self.backg_music = background_music()
         self.power_up_manager = PowerUpManager()
+        #self.play_music()
+        
     
     def run(self):
         self.obstacle_manager.reset_obstacle(self)
@@ -54,8 +59,8 @@ class Game:
         self.player.update(user_input)
         self.obstacle_manager.update(self)
         self.power_up_manager.update(self.points, self.game_speed, self.player)
-        #self.cloud_manager.update(self)
-        #self.bird_manager.update(self)
+        self.cloud_manager.update(self)
+        self.bird_manager.update(self)
 
     def draw(self):
         self.clock. tick(FPS)
@@ -66,6 +71,9 @@ class Game:
         self.score()
         self.player_heart_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
+        self.cloud_manager.draw(self.screen)
+        if self.points >= 1000:
+            self.bird_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -76,7 +84,7 @@ class Game:
         self.screen.blit(BG, (image_with + self.x_pos_bg, self.y_pos_bg) )
 
         if(self.x_pos_bg <= -image_with):
-            self.screen.blit(86, ( image_with + self.x_pos_bg, self.y_pos_bg))
+            self.screen.blit(BG, ( image_with + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg = self.x_pos_bg - self.game_speed
 
@@ -110,7 +118,7 @@ class Game:
         elif death_count >0:
             text,text_rect = get_centered_message('Press any key to Restart')
             score, score_rect = get_centered_message('Your score '+ str(self.points), heigth=half_screen_height +50)
-            death, death_rect = get_centered_message('You died' + str(self.death_count) + 'times' , heigth= half_screen_height + 100)
+            death, death_rect = get_centered_message('You died ' + str(self.death_count) + ' times ' , heigth= half_screen_height + 100)
             self.screen.blit(death,death_rect)
             self.screen.blit(score,score_rect)
             self.screen.blit(text,text_rect)
@@ -128,5 +136,6 @@ class Game:
             if (event.type == pygame.KEYDOWN):
                 self.run()
         
-
-
+##    def play_music(self):
+        #while self.playing == False:
+            
