@@ -15,6 +15,6 @@ def get_score_element(points):
 def get_centered_message(message, width = SCREEN_WIDTH //2, heigth = SCREEN_HEIGHT //2 ):
     font = pygame.font.Font(FONT_STYLE,30)
     text = font.render(message, True, black_color)
-    text_rect   = text.get_rect()
+    text_rect = text.get_rect()
     text_rect.center = (width, heigth)
     return text, text_rect

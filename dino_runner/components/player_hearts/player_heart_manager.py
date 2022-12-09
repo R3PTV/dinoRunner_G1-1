@@ -2,7 +2,7 @@ from dino_runner.utils.constants import HEART_COUNT
 from dino_runner.components.player_hearts.heart import Heart
 
 class PlayerHeartManager:
-    def _init_(self):
+    def __init__(self):
         self.heart_count = HEART_COUNT
 
     def reduce_heart(self):
@@ -10,7 +10,7 @@ class PlayerHeartManager:
 
     def draw(self, screen):
         x_position = 10
-        y_position = 10
+        y_position = 20
 
         for count in range(self.heart_count):
             heart = Heart(x_position,y_position)
@@ -18,5 +18,5 @@ class PlayerHeartManager:
             x_position = x_position +30
 
     def reset_herts(self):
-        self.heart_count = HEART_COUNT
+        self.heart_count = 4
 
