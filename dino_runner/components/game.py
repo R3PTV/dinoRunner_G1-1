@@ -5,7 +5,8 @@ from dino_runner.components.obstacle.obstacleManager import ObstacleManager
 from dino_runner.components.score_menu.text_utils import *
 from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 from dino_runner.components.powerup.powerupManager import PowerUpManager
-from dino_runner.components.cloud.cloud import Cloud
+#from dino_runner.components.cloud.cloud import Cloud
+#from dino_runner.components.bird.bird import Bird
 
 
 class Game:
@@ -21,12 +22,13 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
-        self.cloud_manager = Cloud()
+        #self.cloud_manager = Cloud()
         self.points = 0
         self.death_count = 0
         self.running = True
         self.player_heart_manager = PlayerHeartManager()
         self.show_text = False
+        #self.bird_manager = Bird()
     
         self.power_up_manager = PowerUpManager()
     
@@ -52,11 +54,12 @@ class Game:
         self.player.update(user_input)
         self.obstacle_manager.update(self)
         self.power_up_manager.update(self.points, self.game_speed, self.player)
-        self.cloud_manager.update(self)
+        #self.cloud_manager.update(self)
+        #self.bird_manager.update(self)
 
     def draw(self):
         self.clock. tick(FPS)
-        self.screen.fill( (255,255,255) )
+        self.screen.fill((255,255,255))
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)

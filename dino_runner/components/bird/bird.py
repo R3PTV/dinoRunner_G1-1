@@ -1,11 +1,11 @@
 import random
-from dino_runner.utils.constants import SCREEN_WIDTH, CLOUD
+from dino_runner.utils.constants import SCREEN_WIDTH, BIRD
 
-class Cloud:
+class Bird:
     def __init__(self):
         self.x = SCREEN_WIDTH + random.randint(800,1000)
-        self.y = random.randint(50,100)
-        self.image = CLOUD
+        self.y = random.randint(100, 200)
+        self.image = BIRD
         self.width = self.image.get_width()
 
     def update(self, game):
